@@ -21,17 +21,18 @@ public class DataBaseWrite {
     private FirebaseAuth mAuth;
 
 
-    //Add/Upload new User in the DataBase with key = phoneNumber
-    public void writeUser(String id, User user){
+    //Add/Upload new User in the DataBase and save also the phoneNumber
+    public void writeUser(User user){
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser userA = mAuth.getCurrentUser();
-        String userID = userA.getUid();                 //GET ID FROM AUTHENTICATION
-        user.setPhoneNumber(userA.getPhoneNumber());
+        String userID = userA.getUid();               //GET ID FROM AUTHENTICATION
+        user.setPhoneNumber(userA.getPhoneNumber());;
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference("users");
         // [END initialize_database_ref]
-        mDatabase.child(userID).setValue(user);                 //Write new User with ID phoneNumber
+        mDatabase.child(userID).setValue(user);
     }
+
 
 }
