@@ -1,6 +1,5 @@
 package com.tlc.laque.redcarpet.database;
 
-import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
