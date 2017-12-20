@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 import com.tlc.laque.redcarpet.database.DataBaseWrite;
+import com.tlc.laque.redcarpet.users.User;
 
 /**
  * REGISTRATION CLASS
@@ -27,7 +28,7 @@ import com.tlc.laque.redcarpet.database.DataBaseWrite;
  * MOVING TO MAINACTIVITY
  */
 
-public class Registration extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
     private static final String REQUIRED = "Required";
 
@@ -97,6 +98,13 @@ public class Registration extends AppCompatActivity {
         // pushing user to 'users' node using the the authID
         DataBaseWrite d = new DataBaseWrite();
         d.writeUser(user); //Method to write in the Database
+
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("MyNickName", user.getNickname());
+        editor.commit();
+
         moveToMain();
 
 
@@ -107,7 +115,7 @@ public class Registration extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean("logB", true);
         editor.commit();
-        Intent intent = new Intent(Registration.this, MainActivity.class);
+        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
