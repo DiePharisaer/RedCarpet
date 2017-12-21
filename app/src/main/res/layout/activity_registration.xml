@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/background"
     android:layout_height="match_parent"
-    tools:context="com.tlc.laque.redcarpet.registration.Registration">
+    tools:context="com.tlc.laque.redcarpet.registration.RegistrationActivity">
 
     <Button
         android:id="@+id/buttonReg"
@@ -25,7 +26,7 @@
         android:layout_marginTop="73dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="" />
+        android:hint="NickName" />
 
     <EditText
         android:id="@+id/editTextLocation"
@@ -36,7 +37,7 @@
         android:layout_marginTop="31dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="" />
+        android:hint="Location" />
 
     <TextView
         android:id="@+id/textView2"

@@ -3,33 +3,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_parties"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="All Parties" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_parties_attending"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Parties Attending" />
+        <item
+            android:id="@+id/nav_friends"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:title="Friends" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_setting"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Setting" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/nav_create_party"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Create Party" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Administration">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_attending_party"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Attending Party" />
         </menu>
     </item>
 
