@@ -25,7 +25,6 @@ import com.tlc.laque.redcarpet.users.ListUsers;
 *Activity for create a new Party
 * Only if you have N Friends
 *Then it has to be accepted from the Adiminstration
-* TEST COMMENT
 */
 
 public class CreateNewPartyActivity extends MainActivity {
