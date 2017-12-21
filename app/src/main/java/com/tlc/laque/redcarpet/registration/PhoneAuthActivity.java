@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 
 import java.util.concurrent.TimeUnit;
@@ -418,7 +417,7 @@ public class PhoneAuthActivity extends AppCompatActivity implements
                 signOut();
                 break;
             case R.id.continueButton: //Button move to the mainActivity
-                Intent intent = new Intent(PhoneAuthActivity.this, Registration.class);
+                Intent intent = new Intent(PhoneAuthActivity.this, RegistrationActivity.class);
                 startActivity(intent);
                 finish();
                 break;

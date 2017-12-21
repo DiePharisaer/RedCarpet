@@ -1,10 +1,12 @@
 package com.tlc.laque.redcarpet.parties;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -18,8 +20,8 @@ import com.google.firebase.storage.UploadTask;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 import com.tlc.laque.redcarpet.database.DataBaseWrite;
-import com.tlc.laque.redcarpet.settings.UserSettingActivity;
-import com.tlc.laque.redcarpet.users.ListUsers;
+
+import java.util.Calendar;
 
 /*
 *Activity for create a new Party
@@ -49,7 +51,11 @@ public class CreateNewPartyActivity extends MainActivity {
         contentFrameLayout.removeAllViews();
         getLayoutInflater().inflate(R.layout.activity_create_new_party, contentFrameLayout);
 
+
         initVariable();
+
+
+
     }
 
     //Initialize all the Variable
@@ -62,6 +68,8 @@ public class CreateNewPartyActivity extends MainActivity {
         informationField = findViewById(R.id.editTextInformationCParty);
         imageSelected = findViewById(R.id.imageViewSelectedP);
 
+        timeStartField.addTextChangedListener(mDateEntryWatcher);
+        //timeFinishField.addTextChangedListener(mDateEntryWatcher);
     }
 
     //Listener of the Buttons of all the activity
@@ -156,5 +164,56 @@ public class CreateNewPartyActivity extends MainActivity {
         }
 
     }
+
+    private TextWatcher mDateEntryWatcher = new TextWatcher() {
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String working = s.toString();
+            boolean isValid = true;
+            if (working.length()==2 && before ==0) {
+                if (Integer.parseInt(working) < 1 || Integer.parseInt(working)>31) {
+                    isValid = false;
+                } else {
+                    working+="/";
+                    timeStartField.setText(working);
+                    timeStartField.setSelection(working.length());
+                }
+            }
+            else if(working.length()==5 && before ==0) {
+                String enteredMonth = working.substring(3);
+                if (Integer.parseInt(enteredMonth) < 1 || Integer.parseInt(enteredMonth)>12) {
+                    isValid = false;
+                } else {
+                    working+="/";
+                    timeStartField.setText(working);
+                    timeStartField.setSelection(working.length());
+                }
+            }
+            else if (working.length()==10 && before ==0) {
+                String enteredYear = working.substring(6);
+                int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                if (Integer.parseInt(enteredYear) < currentYear) {
+                    isValid = false;
+                }
+            } else if (working.length()!=10) {
+                isValid = false;
+            }
+
+            if (!isValid) {
+                timeStartField.setError("Enter a valid date: DD/MM/YYYY");
+            } else {
+                timeStartField.setError(null);
+            }
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {}
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+    };
+
 
 }
