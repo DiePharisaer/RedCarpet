@@ -27,6 +27,10 @@ import java.util.Calendar;
 *Activity for create a new Party
 * Only if you have N Friends
 *Then it has to be accepted from the Adiminstration
+<<<<<<< HEAD
+=======
+* TEST COMMENT
+>>>>>>> origin/master
 */
 
 public class CreateNewPartyActivity extends MainActivity {
@@ -69,7 +73,7 @@ public class CreateNewPartyActivity extends MainActivity {
         imageSelected = findViewById(R.id.imageViewSelectedP);
 
         timeStartField.addTextChangedListener(mDateEntryWatcher);
-        //timeFinishField.addTextChangedListener(mDateEntryWatcher);
+        timeFinishField.addTextChangedListener(mDateEntryWatcher);
     }
 
     //Listener of the Buttons of all the activity
@@ -166,6 +170,7 @@ public class CreateNewPartyActivity extends MainActivity {
     }
 
     private TextWatcher mDateEntryWatcher = new TextWatcher() {
+
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             String working = s.toString();
