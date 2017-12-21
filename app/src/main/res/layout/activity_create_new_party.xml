@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/background"
+    android:layout_height="match_parent"
+    tools:context="com.tlc.laque.redcarpet.parties.CreateNewPartyActivity">
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextLocationCParty"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/editTextNickNameCParty"
+        android:text="Name PArty" />
+
+    <EditText
+        android:id="@+id/editTextNickNameCParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Name Party"
+        android:inputType="textPersonName"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:id="@+id/editTextLocationCParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/editTextNickNameCParty"
+        android:layout_below="@+id/editTextNickNameCParty"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Location"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextLocationCParty"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editTextLocationCParty"
+        android:layout_toStartOf="@+id/editTextLocationCParty"
+        android:text="Location" />
+
+    <EditText
+        android:id="@+id/editTextTSCParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLocationCParty"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/textView17"
+        android:ems="10"
+        android:hint="Time Start"
+        android:inputType="time" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextTSCParty"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editTextTSCParty"
+        android:layout_toStartOf="@+id/editTextTSCParty"
+        android:text="Time Start" />
+
+    <EditText
+        android:id="@+id/editTextTMFParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTSCParty"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@+id/textView18"
+        android:ems="10"
+        android:hint="Time Finish"
+        android:inputType="time" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextTMFParty"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editTextTMFParty"
+        android:layout_toStartOf="@+id/editTextTMFParty"
+        android:text="Time Finish" />
+
+    <Button
+        android:id="@+id/buttonAddImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/editTextInformationCParty"
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/textView21"
+        android:onClick="clickCreateParty"
+        android:text="Add Image" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Image Party"
+        android:layout_above="@+id/imageViewSelectedP"
+        android:layout_alignTop="@+id/buttonAddImage"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:id="@+id/imageViewSelectedP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonAddImage"
+        app:srcCompat="@drawable/common_full_open_on_phone"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/buttonPostParty"
+        android:layout_toEndOf="@+id/textView20"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/buttonPostParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:onClick="clickCreateParty"
+        android:text="POST" />
+
+    <EditText
+        android:id="@+id/editTextInformationCParty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTMFParty"
+        android:layout_marginTop="12dp"
+        android:layout_toEndOf="@+id/textView19"
+        android:ems="10"
+        android:hint="Information"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/editTextInformationCParty"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/editTextInformationCParty"
+        android:layout_toStartOf="@+id/editTextInformationCParty"
+        android:text="Information" />
+</RelativeLayout>

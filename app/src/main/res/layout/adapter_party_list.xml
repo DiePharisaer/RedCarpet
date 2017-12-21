@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+
+        android:id="@+id/imageViewUserAdapter"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
+
+    <TextView
+        android:id="@+id/textViewNamePartyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/imageViewUserAdapter" />
+
+    <TextView
+        android:id="@+id/textViewLocationPartyList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_below="@+id/textView11"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/textViewNumAttending"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50"
+        android:textSize="30dp"
+        android:layout_alignBottom="@+id/textViewNamePartyList"
+        android:layout_toStartOf="@+id/imageView5"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:textStyle="bold"
+        android:textSize="15dp"
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:layout_below="@+id/textViewNumAttending"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/icon_people"
+        android:layout_above="@+id/textView11" />
+</RelativeLayout>
