@@ -93,7 +93,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
 
-        User user = new User(nickName, location); // creating user object
+        User user = new User(nickName, location, "Everyone"); // creating user object
 
         // pushing user to 'users' node using the the authID
         DataBaseWrite d = new DataBaseWrite();
