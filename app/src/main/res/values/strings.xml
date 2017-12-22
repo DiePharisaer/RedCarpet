@@ -6,4 +6,12 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_start">StartActivity</string>
+
+    <string name="phoneNumberText">Phone number</string>
+    <string name="verificationCodeText">Verification code</string>
+    <string name="beginAuthenticationText">Send Code</string>
+    <string name="verifyCodeText">Verify Code</string>
+    <string name="resendCodeText">Resend Code</string>
+
+
 </resources>

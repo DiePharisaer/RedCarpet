@@ -17,6 +17,7 @@
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:contentDescription="STRINGA1"
             android:src="@drawable/start_page_image" />
 
@@ -66,7 +67,7 @@
                     android:id="@+id/field_phone_number"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="numero tel"
+                    android:hint="@string/phoneNumberText"
                     android:layout_weight="1.0"
                     android:inputType="phone"/>
 
@@ -74,7 +75,7 @@
                     android:id="@+id/field_verification_code"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="verification code"
+                    android:hint="@string/verificationCodeText"
                     android:layout_weight="1.0"
                     android:inputType="number"/>
 
@@ -91,21 +92,21 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="start phone aut"/>
+                    android:text="@string/beginAuthenticationText"/>
 
                 <Button
                     android:id="@+id/button_verify_phone"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="verify"/>
+                    android:text="@string/verifyCodeText"/>
 
                 <Button
                     android:id="@+id/button_resend"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="resend"/>
+                    android:text="@string/resendCodeText"/>
             </LinearLayout>
 
         </LinearLayout>
