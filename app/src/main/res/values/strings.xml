@@ -12,6 +12,14 @@
     <string name="beginAuthenticationText">Send Code</string>
     <string name="verifyCodeText">Verify Code</string>
     <string name="resendCodeText">Resend Code</string>
+    <string name="nickname">Nickname</string>
+    <string name="location">Location</string>
+    <string name="partyName">Party Name</string>
+    <string name="partyLocation">Party Location</string>
+    <string name="partyStartTime">Start Time</string>
+    <string name="partyEndTime">End Time</string>
+    <string name="partyDetails">Details</string>
+
 
 
 </resources>
