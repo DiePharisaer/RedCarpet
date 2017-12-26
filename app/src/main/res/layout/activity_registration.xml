@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/md_white_1000"
     android:layout_height="match_parent"
     tools:context="com.tlc.laque.redcarpet.registration.RegistrationActivity">
 
@@ -11,48 +11,55 @@
         android:id="@+id/buttonReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="183dp"
         android:onClick="clickRegister"
-        android:text="Register" />
+        android:text="Register"
+        android:background="@color/colorAccent"
+        android:textColor="@color/md_white_1000"
+        android:layout_marginTop="21dp"
+        android:layout_below="@+id/inputlayoutlocation"
+        android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:id="@+id/editTextNickName"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutNickname"
+        android:hint="@string/nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="73dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="NickName" />
+        android:layout_marginTop="64dp">
 
-    <EditText
-        android:id="@+id/editTextLocation"
+        <EditText
+            android:id="@+id/editTextNickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_marginTop="66dp"
+            android:layout_below="@+id/inputlayoutNickname"
+            android:layout_alignStart="@+id/editTextLocation" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutlocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editTextNickName"
-        android:layout_below="@+id/editTextNickName"
-        android:layout_marginTop="31dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Location" />
+        android:hint="@string/location"
+        android:layout_below="@+id/inputlayoutNickname"
+        android:layout_alignStart="@+id/inputlayoutNickname"
+        android:layout_marginTop="46dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextLocation"
-        android:layout_toStartOf="@+id/editTextNickName"
-        android:text="Nickname" />
+        <EditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_above="@+id/inputlayoutlocation"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextLocation"
-        android:layout_toStartOf="@+id/editTextLocation"
-        android:text="Location" />
+    </android.support.design.widget.TextInputLayout>
+
 
 </RelativeLayout>

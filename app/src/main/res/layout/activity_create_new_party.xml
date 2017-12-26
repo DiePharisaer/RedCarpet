@@ -3,29 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/md_white_1000"
     android:layout_height="match_parent"
     tools:context="com.tlc.laque.redcarpet.parties.CreateNewPartyActivity">
 
-    <TextView
-        android:id="@+id/textView16"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutPartyName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextLocationCParty"
-        android:layout_alignParentStart="true"
+        android:hint="@string/partyName"
+        android:layout_marginTop="18dp"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/editTextNickNameCParty"
-        android:text="Name PArty" />
+        android:layout_centerHorizontal="true">
+        <EditText
+            android:id="@+id/editTextNickNameCParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:id="@+id/editTextNickNameCParty"
+    </android.support.design.widget.TextInputLayout>
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutPartyLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Name Party"
-        android:inputType="textPersonName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:hint="@string/partyLocation"
+        android:layout_below="@+id/inputlayoutPartyName"
+        android:layout_alignStart="@+id/inputlayoutPartyName">
 
     <EditText
         android:id="@+id/editTextLocationCParty"
@@ -35,91 +44,69 @@
         android:layout_below="@+id/editTextNickNameCParty"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="Location"
         android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextLocationCParty"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editTextLocationCParty"
-        android:layout_toStartOf="@+id/editTextLocationCParty"
-        android:text="Location" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextTSCParty"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutPartyStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLocationCParty"
-        android:layout_marginTop="12dp"
-        android:layout_toEndOf="@+id/textView17"
-        android:ems="10"
-        android:hint="Time Start"
-        android:inputType="time" />
+        android:hint="@string/partyStartTime"
+        android:layout_below="@+id/inputlayoutPartyLocation"
+        android:layout_alignStart="@+id/inputlayoutPartyLocation">
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextTSCParty"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editTextTSCParty"
-        android:layout_toStartOf="@+id/editTextTSCParty"
-        android:text="Time Start" />
+        <EditText
+            android:id="@+id/editTextTSCParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/inputlayoutPartyLocation"
+            android:layout_below="@+id/inputlayoutPartyLocation"
+            android:ems="10"
+            android:inputType="time" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextTMFParty"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutPartyEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTSCParty"
-        android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/textView18"
-        android:ems="10"
-        android:hint="Time Finish"
-        android:inputType="time" />
+        android:hint="@string/partyEndTime"
+        android:layout_below="@+id/inputlayoutPartyStartTime"
+        android:layout_alignStart="@+id/inputlayoutPartyStartTime"
+        android:layout_alignEnd="@+id/inputlayoutPartyStartTime">
 
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextTMFParty"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editTextTMFParty"
-        android:layout_toStartOf="@+id/editTextTMFParty"
-        android:text="Time Finish" />
+        <EditText
+            android:id="@+id/editTextTMFParty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/inputlayoutPartyDetails"
+            android:layout_below="@+id/buttonAddImage"
+            android:ems="10"
+            android:inputType="time" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/buttonAddImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/editTextInformationCParty"
-        android:layout_marginTop="11dp"
-        android:layout_toEndOf="@+id/textView21"
         android:onClick="clickCreateParty"
-        android:text="Add Image" />
+        android:textColor="@color/md_white_1000"
+        android:background="@color/colorAccent"
+        android:text="Add Image"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/inputlayoutPartyDetails"
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Image Party"
-        android:layout_above="@+id/imageViewSelectedP"
-        android:layout_alignTop="@+id/buttonAddImage"
-        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/imageViewSelectedP"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonAddImage"
         app:srcCompat="@drawable/common_full_open_on_phone"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/buttonPostParty"
-        android:layout_toEndOf="@+id/textView20"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/buttonAddImage"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonPostParty" />
 
     <Button
         android:id="@+id/buttonPostParty"
@@ -129,26 +116,27 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:onClick="clickCreateParty"
+        android:textColor="@color/md_white_1000"
+        android:background="@color/colorAccent"
         android:text="POST" />
 
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutPartyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/partyDetails"
+        android:layout_below="@+id/inputlayoutPartyEndTime"
+        android:layout_alignStart="@+id/inputlayoutPartyEndTime">
     <EditText
         android:id="@+id/editTextInformationCParty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTMFParty"
         android:layout_marginTop="12dp"
-        android:layout_toEndOf="@+id/textView19"
         android:ems="10"
-        android:hint="Information"
         android:inputType="textPersonName" />
 
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editTextInformationCParty"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/editTextInformationCParty"
-        android:layout_toStartOf="@+id/editTextInformationCParty"
-        android:text="Information" />
+</android.support.design.widget.TextInputLayout>
+
+
 </RelativeLayout>

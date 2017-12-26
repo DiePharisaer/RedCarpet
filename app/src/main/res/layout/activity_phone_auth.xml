@@ -62,23 +62,42 @@
                 android:orientation="horizontal"
                 android:weightSum="2.0">
 
-                <EditText
-                    android:id="@+id/field_phone_number"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputlayoutPhoneNumber"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="numero tel"
                     android:layout_weight="1.0"
-                    android:inputType="phone"/>
+                    android:hint="@string/phoneNumberText"
+                    android:layout_height="wrap_content">
 
+                    <EditText
+                        android:id="@+id/field_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0"
+                        android:inputType="phone"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/inputlayoutVerification"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1.0"
+                    android:layout_width="0dp"
+                    android:hint="@string/verificationCodeText"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/field_verification_code"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="verification code"
-                    android:layout_weight="1.0"
                     android:inputType="number"/>
 
-            </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
+
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -89,23 +108,32 @@
                 <Button
                     android:id="@+id/button_start_verification"
                     android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/md_white_1000"
+                    android:background="@color/colorAccent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="start phone aut"/>
+                    android:text="@string/beginAuthenticationText"/>
 
                 <Button
                     android:id="@+id/button_verify_phone"
                     android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/md_white_1000"
+                    android:background="@color/colorAccent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="verify"/>
+                    android:text="@string/verifyCodeText"/>
 
                 <Button
                     android:id="@+id/button_resend"
                     android:layout_width="0dp"
+                    android:layout_margin="5dp"
+                    android:textColor="@color/md_white_1000"
+                    android:background="@color/colorAccent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
-                    android:text="resend"/>
+                    android:text="@string/resendCodeText"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -119,21 +147,30 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:visibility="gone"
+            android:gravity="center"
             android:weightSum="1.0">
 
             <Button
                 android:id="@+id/continueButton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:background="@color/colorAccent"
                 android:layout_weight="1.0"
+                android:textColor="@color/md_white_1000"
                 android:text="Continue"/>
 
             <Button
                 android:id="@+id/sign_out_button"
-                android:layout_width="match_parent"
+                android:textColor="@color/md_white_1000"
+                android:background="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="LogOUT"/>
+                android:text="Logout"/>
 
 
 
