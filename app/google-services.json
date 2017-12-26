@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "712546275868-2bkm3slvr0kig8c733alkor8s5sil4os.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tlc.laque.redcarpet",
+            "certificate_hash": "17eae5d184f7b5079744cf70058665159a4ebd7d"
+          }
+        },
+        {
           "client_id": "712546275868-7r4570rj1r8g6rfprbrch4nusu7p5ccu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
