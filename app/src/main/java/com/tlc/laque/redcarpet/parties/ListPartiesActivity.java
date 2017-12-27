@@ -119,7 +119,7 @@ public class ListPartiesActivity extends MainActivity {
 
                         DataBaseRead dbR = new DataBaseRead();
                         try {
-                            parties = dbR.getAllParties(dataSnapshot);
+                            parties = dbR.getAllPartiesAttended(dataSnapshot);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
