@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.tlc.laque.redcarpet.parties.Party;
 import com.tlc.laque.redcarpet.users.User;
 /**
@@ -41,6 +44,8 @@ public class DataBaseWrite {
         mDatabase.child("location").setValue(user.getLocation());
         mDatabase.child("phoneNumber").setValue(user.getPhoneNumber());
         mDatabase.child("privacy").setValue(user.getPrivacy());
+        mDatabase.child("rating").setValue(user.getRating());
+        mDatabase.child("numberVote").setValue(user.getNumberVote());
     }
 
     public void registerUser(String userID, String idParty){
@@ -118,6 +123,7 @@ public class DataBaseWrite {
         mDatabase.child("timeFinish").setValue(p.getTimeFinish());
         mDatabase.child(("url")).setValue(p.getUrl());
         mDatabase.child("rating").setValue("");
+        mDatabase.child("organizer").setValue(p.getOrganizer());
 
     }
 
@@ -138,6 +144,66 @@ public class DataBaseWrite {
             mDatabase.child("timeFinish").setValue(p.getTimeFinish());
             mDatabase.child(("url")).setValue(p.getUrl());
             mDatabase.child("rating").setValue("");
+             mDatabase.child("organizer").setValue(p.getOrganizer());
     }
 
+    public void moveParty(Party p){
+        /* mDatabase = FirebaseDatabase.getInstance().getReference("Parties");
+        mDatabase.child(p.getKey()).removeValue();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference("PartiesFinished/"+p.getKey());
+        // [END initialize_database_ref]
+        mDatabase.child("name").setValue(p.getName());
+        mDatabase.child("info").setValue(p.getInfo());
+        mDatabase.child("location").setValue(p.getLocation());
+        mDatabase.child("timeStart").setValue(p.getTimeStart());
+        mDatabase.child("timeFinish").setValue(p.getTimeFinish());
+        mDatabase.child(("url")).setValue(p.getUrl());
+        mDatabase.child("rating").setValue("");
+        mDatabase.child("organizer").setValue(p.getOrganizer());*/
+        DatabaseReference mDataBaseFrom = FirebaseDatabase.getInstance().getReference("Parties/"+p.getKey());
+        DatabaseReference mDataBaseTo = FirebaseDatabase.getInstance().getReference("PartiesFinished/"+p.getKey());
+        moveParty(mDataBaseFrom, mDataBaseTo, p.getKey());
+    }
+
+    public void voteParty(Party p,String keyOrganizer, String oldrate, float newRate, String numberVote){
+        float newR = Float.valueOf(oldrate);
+        int numberV = Integer.parseInt(numberVote);
+        numberV = numberV + 1;
+        newR = newR + newRate;
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+keyOrganizer);
+        // [END initialize_database_ref]
+        mDatabase.child("rating").setValue(newR);
+        mDatabase.child("numberVote").setValue(numberV);
+        mDatabase = FirebaseDatabase.getInstance().getReference("PartiesFinished/"+p.getKey()+"/userAttending");
+        mDatabase.child(keyOrganizer).removeValue();
+    }
+    private void moveParty(final DatabaseReference fromPath, final DatabaseReference toPath, final String key) {
+        fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                toPath.setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(DatabaseError firebaseError, DatabaseReference firebase) {
+                        if (firebaseError != null) {
+                            System.out.println("Copy failed");
+                        } else {
+                            System.out.println("Success");
+                            mDatabase = FirebaseDatabase.getInstance().getReference("Parties");
+                            mDatabase.child(key).removeValue();
+                            mDatabase = FirebaseDatabase.getInstance().getReference("users/"+dr.getUserId()+"partyAttending/");
+                            mDatabase.child(key).removeValue();
+
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

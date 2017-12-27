@@ -22,6 +22,7 @@ import com.tlc.laque.redcarpet.database.DataBaseRead;
 import com.tlc.laque.redcarpet.users.ListAdapterUser;
 import com.tlc.laque.redcarpet.users.ListUsers;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 //Showing the listView of the Parties
@@ -50,7 +51,11 @@ public class ListPartiesActivity extends MainActivity {
         if (attending == null) {
             readAllParty();
         } else {
-            readAttendingParty();
+            if(attending.equalsIgnoreCase("true"))
+            readAttendingParty("Parties", false);
+            else if(attending.equalsIgnoreCase("attended")){
+                readAttendingParty("PartiesFinished", true);
+            }
         }
 
 
@@ -63,24 +68,32 @@ public class ListPartiesActivity extends MainActivity {
                 intent.putExtra("pathParty", path + "/" + parties.get(position).getKey());
                 intent.putExtra("idParty", parties.get(position).getKey());
                 startActivity(intent);
+                finish();
             }
         });
 
     }
         //IF has to show the Parties that you are attending
-        private void readAttendingParty(){
+        private void readAttendingParty(String p, final boolean attended){
         DataBaseRead dr = new DataBaseRead();
         String userID = dr.getUserId();
         Query query;
             mDatabase = FirebaseDatabase.getInstance().getReference();
-        query = mDatabase.child("Parties").orderByChild("userAttending/"+""+userID).equalTo(userID);
+        query = mDatabase.child(p).orderByChild("userAttending/"+""+userID).equalTo(userID);
             query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() == null){}
                 else {
                     DataBaseRead dbR = new DataBaseRead();
-                    parties = dbR.getAllParties(dataSnapshot);
+                    try {
+                        if(attended == false)
+                            parties = dbR.getAllParties(dataSnapshot);
+                        else
+                            parties = dbR.getAllPartiesAttended(dataSnapshot);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     ListAdapterParties LicustomAdapter = new ListAdapterParties(ListPartiesActivity.this, R.layout.adapter_party_list, parties);
                     listViewParties.setAdapter(LicustomAdapter);
                 }
@@ -105,7 +118,11 @@ public class ListPartiesActivity extends MainActivity {
                     else {
 
                         DataBaseRead dbR = new DataBaseRead();
-                        parties = dbR.getAllParties(dataSnapshot);
+                        try {
+                            parties = dbR.getAllParties(dataSnapshot);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         ListAdapterParties LicustomAdapter = new ListAdapterParties(ListPartiesActivity.this, R.layout.adapter_party_list, parties);
                         listViewParties.setAdapter(LicustomAdapter);
                     }

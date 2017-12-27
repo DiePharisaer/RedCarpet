@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:text="Button"
-        android:layout_below="@+id/listViewUsers" />
+        android:layout_below="@+id/listViewUsers"
+        android:onClick="buttonAddFriends"
+        android:text="get Contacts" />
 </RelativeLayout>

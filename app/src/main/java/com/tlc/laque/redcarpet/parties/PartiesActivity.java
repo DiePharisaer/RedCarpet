@@ -5,9 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.icu.text.MessagePattern;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +44,7 @@ import com.tlc.laque.redcarpet.users.ListUsers;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class PartiesActivity extends MainActivity {
@@ -54,6 +58,7 @@ public class PartiesActivity extends MainActivity {
     Button buttonAttending;
     LinearLayout layoutAdmin;
     LinearLayout layoutUser;
+    LinearLayout layoutUserAttended;
     String idParty;
     Party p;
     DataBaseRead dbR;
@@ -64,6 +69,8 @@ public class PartiesActivity extends MainActivity {
     private DataBaseWrite dbW;
     private ImageView v;
     private String pathParty;
+    private float ratingValue;
+    private RatingBar ratingBarOrg;
 
 
     @Override
@@ -80,13 +87,26 @@ public class PartiesActivity extends MainActivity {
         idParty = extras.getString("idParty");
         pathParty = extras.getString("pathParty");
 
+        RatingBar rating = (RatingBar)findViewById(R.id.rating);
+         ratingBarOrg = (RatingBar)findViewById(R.id.ratingBarOrganizer);
 
+
+        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+
+            @Override
+            public void onRatingChanged(RatingBar arg0, float rateValue, boolean arg2) {
+                // TODO Auto-generated method stub
+                Log.d("Rating", "your selected value is :"+rateValue);
+                ratingValue =  rateValue;
+            }
+        });
         setVariable();
         getInformatinDataBase();
         switchAttending.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    dbW.registerUser(dbR.getUserId(),idParty);
+                    if(!p.isPartyFinished()){
+                    dbW.registerUser(dbR.getUserId(),idParty);}
                 } else {
                     dbW.cancelRegisterUser(dbR.getUserId(),idParty, p.getName());
                 }
@@ -105,15 +125,8 @@ public class PartiesActivity extends MainActivity {
         buttonChat = findViewById(R.id.buttonChatParty);
         layoutAdmin = findViewById(R.id.layoutAdminParty);
         layoutUser = findViewById(R.id.layoutUserParty);
+        layoutUserAttended = findViewById(R.id.layoutUserPartyAttended);
 
-        if(pathParty.toLowerCase().contains("administration")){
-            layoutUser.setVisibility(View.GONE);
-            switchAttending.setVisibility(View.GONE);
-
-        }
-        else{
-            layoutAdmin.setVisibility(View.GONE);
-        }
 
     }
 
@@ -125,7 +138,32 @@ public class PartiesActivity extends MainActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
                 else {
-                   getInfoParty(dataSnapshot);
+                    try {
+                        getInfoParty(dataSnapshot);
+                        getInfoOrganizer();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+    }
+
+    public void getInfoOrganizer(){
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+p.getOrganizer());
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
+                else {
+                    float newR = Float.valueOf(dataSnapshot.child("rating").getValue().toString());
+                    int i = Integer.parseInt(dataSnapshot.child("numberVote").getValue().toString());
+                    ratingBarOrg.setRating(newR/i*5);
                 }
             }
 
@@ -135,8 +173,7 @@ public class PartiesActivity extends MainActivity {
         });
     }
 
-
-    public void  getInfoParty(DataSnapshot dataSnapshot){
+    public void  getInfoParty(DataSnapshot dataSnapshot) throws ParseException {
         p = new Party();
         p = dbR.getParty(dataSnapshot);
         if(dataSnapshot.child("userAttending").child(dbR.getUserId()).exists()){
@@ -148,9 +185,24 @@ public class PartiesActivity extends MainActivity {
         setTextView();
 
     }
-
     //Set the TextView after read the DataBase
     private void setTextView(){
+
+        if(pathParty.toLowerCase().contains("administration")){
+            layoutUserAttended.setVisibility(View.GONE);
+            layoutUser.setVisibility(View.GONE);
+            switchAttending.setVisibility(View.GONE);
+
+        }
+        else {
+            if (p.isPartyFinished()) {
+                layoutAdmin.setVisibility(View.GONE);
+                layoutUser.setVisibility(View.GONE);
+            } else {
+                layoutAdmin.setVisibility(View.GONE);
+                layoutUserAttended.setVisibility(View.GONE);
+            }
+        }
         edLocation.setText(p.getLocation());
         edStTime.setText(p.getTimeStart());
         edFiTime.setText(p.getTimeFinish());
@@ -162,6 +214,9 @@ public class PartiesActivity extends MainActivity {
         }
         else{
             switchAttending.setChecked(false);
+        }
+        if(p.isPartyStarted() == true || p.isPartyFinished() == true){
+            switchAttending.setClickable(false);
         }
         setImage();
     }
@@ -189,6 +244,9 @@ public class PartiesActivity extends MainActivity {
                 break;
             case R.id.buttonRefureParty:
                 refuseParty();
+                break;
+            case R.id.buttonVoteParty:
+                voteParty();
                 break;
 
 
@@ -225,6 +283,26 @@ public class PartiesActivity extends MainActivity {
         dw.deleteAttendingPArty(p.getKey());
 
         //StorageReference photoRef = mFirebaseStorage.getReferenceFromUrl(p.getUrl());
+    }
+
+    private void voteParty(){
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+p.getOrganizer());
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
+                else {
+                    DataBaseWrite dw = new DataBaseWrite();
+                    dw.voteParty(p, p.getOrganizer(),dataSnapshot.child("rating").getValue().toString(), ratingValue, dataSnapshot.child("numberVote").getValue().toString());
+                    Toast.makeText(PartiesActivity.this, "Thank you! you are improving RedCarpet!", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
 }

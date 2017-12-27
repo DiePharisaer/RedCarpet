@@ -25,6 +25,7 @@ import com.tlc.laque.redcarpet.parties.ListAdapterParties;
 import com.tlc.laque.redcarpet.parties.PartiesActivity;
 import com.tlc.laque.redcarpet.parties.Party;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class UserActivity extends MainActivity {
@@ -118,7 +119,11 @@ public class UserActivity extends MainActivity {
                 if(dataSnapshot.getValue() == null){}
                 else {
                     DataBaseRead dbR = new DataBaseRead();
-                    partiesAttending = dbR.getAllParties(dataSnapshot);
+                    try {
+                        partiesAttending = dbR.getAllParties(dataSnapshot);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     ListAdapterParties LicustomAdapter = new ListAdapterParties(UserActivity.this, R.layout.adapter_list_user, partiesAttending);
                     listView.setAdapter(LicustomAdapter);
                 }

@@ -17,11 +17,30 @@ public class User {
     private boolean sentFriendRequest;
     private boolean gotFriendRequest;
     private int numberFriendsRequestS;
+    private String rating = "0";
+    private String numberVote = "0";
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
     public User() {
     }
+
+    public String getNumberVote() {
+        return numberVote;
+    }
+
+    public void setNumberVote(String numberVote) {
+        this.numberVote = numberVote;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public User(String name, String email) {
         this.nickname = name;
         this.location = email;

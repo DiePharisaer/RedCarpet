@@ -76,7 +76,8 @@ public class UserSettingActivity extends MainActivity {
                 if (dataSnapshot.getValue() == null) {
                 }                    //If user exist show the old informations
                 else {
-                    user = dataSnapshot.getValue(User.class);
+                    DataBaseRead dr = new DataBaseRead();
+                    user = dr.getUser(dataSnapshot);
                     //user = getData(dataSnapshot, userId);
                     nickNameField.setText(user.getNickname());
                     locationField.setText(user.getLocation());

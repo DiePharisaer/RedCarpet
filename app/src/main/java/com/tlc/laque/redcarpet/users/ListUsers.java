@@ -1,8 +1,12 @@
 package com.tlc.laque.redcarpet.users;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,11 +23,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 import com.tlc.laque.redcarpet.database.DataBaseRead;
+import com.tlc.laque.redcarpet.inputs.Contact;
 import com.tlc.laque.redcarpet.parties.ListAdapterParties;
 import com.tlc.laque.redcarpet.parties.ListPartiesActivity;
 import com.tlc.laque.redcarpet.parties.PartiesActivity;
 import com.tlc.laque.redcarpet.parties.Party;
 
+import java.lang.reflect.Array;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class ListUsers extends MainActivity {
@@ -32,6 +39,7 @@ public class ListUsers extends MainActivity {
     ListView listViewUsers;
     ArrayList<User> users;
     String urlId;
+    ArrayList<Contact> contactList;
     private Button buttonFriends;
 
     @Override
@@ -42,6 +50,8 @@ public class ListUsers extends MainActivity {
         getLayoutInflater().inflate(R.layout.activity_list_users, contentFrameLayout);
         users = new ArrayList<>();
         listViewUsers = findViewById(R.id.listViewUsers);
+        contactList = new ArrayList<>();
+
 
         buttonFriends = findViewById(R.id.buttonFriendsRequest);
         Bundle extras = getIntent().getExtras();
@@ -110,6 +120,84 @@ public class ListUsers extends MainActivity {
             }
         }); */
     }
+    private void getContactList() {
+        ContentResolver cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+                null, null, null, null);
 
+        if ((cur != null ? cur.getCount() : 0) > 0) {
+            while (cur != null && cur.moveToNext()) {
+                String id = cur.getString(
+                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(
+                        ContactsContract.Contacts.DISPLAY_NAME));
+
+                if (cur.getInt(cur.getColumnIndex(
+                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
+                    Cursor pCur = cr.query(
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                            new String[]{id}, null);
+                    while (pCur.moveToNext()) {
+                        Contact contact = new Contact();
+                        String phoneNo = pCur.getString(pCur.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        contact.setContactName(name);
+                        phoneNo = phoneNo.replace(" ", "");
+                        contact.setContactNumber(phoneNo);
+                        contactList.add(contact);
+                        String TAG = "Contact Details";
+                        Log.i(TAG, "Name: " + name);
+                        Log.i(TAG, "Phone Number: " + phoneNo);
+                    }
+                    pCur.close();
+                }
+            }
+        }
+        if(cur!=null){
+            cur.close();
+        }
+    }
+    public void buttonAddFriends(View view){
+        buttonFriends.setText("Getting Contacts");
+        getContactList();
+        showContacts();
+        // Create The Adapter with passing ArrayList as 3rd parameter
+
+    }
+    private void showContacts(){
+        final ArrayList<User> usersListFriends= new ArrayList<>();
+        //Reading from DataBase
+        mDatabase = FirebaseDatabase.getInstance().getReference("users");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() == null){}
+                else {
+
+                    DataBaseRead dbR = new DataBaseRead();
+                    users = dbR.getAllUsers(dataSnapshot);
+                    for(User u: users) {
+                        for (Contact conta : contactList) {
+                            if (conta.getContactNumber().equalsIgnoreCase(u.getPhoneNumber())){
+                                if(!usersListFriends.contains(u)){
+                                usersListFriends.add(u);}
+                            }
+                        }
+                    }
+                    ListAdapterUser LicustomAdapter = new ListAdapterUser(ListUsers.this, R.layout.adapter_list_user, usersListFriends);
+                    listViewUsers.setAdapter(LicustomAdapter);
+                    setTitle("Contacts in the app");
+                    buttonFriends.setText("get Contacts");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
 
 }

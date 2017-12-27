@@ -15,7 +15,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +28,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tlc.laque.redcarpet.database.DataBaseRead;
 import com.tlc.laque.redcarpet.parties.CreateNewPartyActivity;
+import com.tlc.laque.redcarpet.parties.ListAdapterParties;
 import com.tlc.laque.redcarpet.parties.ListPartiesActivity;
+import com.tlc.laque.redcarpet.parties.PartiesActivity;
+import com.tlc.laque.redcarpet.parties.Party;
 import com.tlc.laque.redcarpet.settings.UserSettingActivity;
 import com.tlc.laque.redcarpet.users.ListUsers;
+
+import java.text.ParseException;
+import java.util.ArrayList;
 
 /**
  *  MainActivity CLASS
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity{
     ActionBarDrawerToggle actionBarDrawerToggle;
     Toolbar toolbar;
     private DatabaseReference mDatabase;
+    ListView listViewParties;
+    ArrayList<Party> parties;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,22 @@ public class MainActivity extends AppCompatActivity{
 
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame); //Remember this is the FrameLayout area within your activity_main.xml
         getLayoutInflater().inflate(R.layout.content_main, contentFrameLayout);
+
+        listViewParties = findViewById(R.id.listViewMain);
+
+        readAllParty();
+
+        listViewParties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Intent intent = new Intent(MainActivity.this, PartiesActivity.class);
+                intent.putExtra("pathParty", "Parties/" + parties.get(position).getKey());
+                intent.putExtra("idParty", parties.get(position).getKey());
+                startActivity(intent);
+
+            }
+        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -100,6 +126,13 @@ public class MainActivity extends AppCompatActivity{
                         startActivity(anIntent);
                         drawerLayout.closeDrawers();
                         break;
+                    case R.id.nav_vote_party:
+                        anIntent = new Intent(getApplicationContext(), ListPartiesActivity.class);
+                        anIntent.putExtra("path",  "PartiesFinished");
+                        anIntent.putExtra("attending", "attended");
+                        startActivity(anIntent);
+                        drawerLayout.closeDrawers();
+                        break;
                 }
                 return false;
             }
@@ -131,6 +164,33 @@ public class MainActivity extends AppCompatActivity{
         view.setDrawingCacheEnabled(false);
 
         return new BitmapDrawable(getResources(), bitmap);
+    }
+
+    private void readAllParty(){
+        //Reading from DataBase
+        mDatabase = FirebaseDatabase.getInstance().getReference("Parties");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue() == null){}
+                else {
+
+                    DataBaseRead dbR = new DataBaseRead();
+                    try {
+                        parties = dbR.getAllParties(dataSnapshot);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    ListAdapterParties LicustomAdapter = new ListAdapterParties(MainActivity.this, R.layout.adapter_party_list, parties);
+                    listViewParties.setAdapter(LicustomAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override

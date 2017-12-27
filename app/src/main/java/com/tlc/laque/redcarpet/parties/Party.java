@@ -17,8 +17,34 @@ public class Party {
     private String name;                //Name of the Party (Different from the Key)
     private int  numUserAttending;      //number of User Attending the Party
     private String url;                 //Url download picture of the party
-
+    private boolean partyStarted;       //if the party is already started
+    private boolean partyFinished;
+    private String organizer;
     public  Party(){
+    }
+
+    public String getOrganizer() {
+        return organizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.organizer = organizer;
+    }
+
+    public boolean isPartyStarted() {
+        return partyStarted;
+    }
+
+    public boolean isPartyFinished() {
+        return partyFinished;
+    }
+
+    public void setPartyFinished(boolean partyFinished) {
+        this.partyFinished = partyFinished;
+    }
+
+    public void setPartyStarted(boolean partyStarted) {
+        this.partyStarted = partyStarted;
     }
 
     public String getKey() {

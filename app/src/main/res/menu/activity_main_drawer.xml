@@ -22,6 +22,10 @@
             android:id="@+id/nav_create_party"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Create Party" />
+        <item
+            android:id="@+id/nav_vote_party"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Vote Party attended" />
     </group>
 
     <item android:title="Administration">

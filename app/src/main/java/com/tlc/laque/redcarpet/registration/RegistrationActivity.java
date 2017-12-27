@@ -3,6 +3,7 @@ package com.tlc.laque.redcarpet.registration;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
+import com.tlc.laque.redcarpet.database.DataBaseRead;
 import com.tlc.laque.redcarpet.database.DataBaseWrite;
 import com.tlc.laque.redcarpet.users.User;
 
@@ -60,7 +62,8 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
                 else {
-                    User user = dataSnapshot.getValue(User.class);
+                    DataBaseRead dr = new DataBaseRead();
+                    User user = dr.getUser(dataSnapshot);
                     //user = getData(dataSnapshot, userId);
                     nickNameField.setText(user.getNickname());
                     locationField.setText(user.getLocation());
@@ -94,7 +97,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
         User user = new User(nickName, location, "Everyone"); // creating user object
-
         // pushing user to 'users' node using the the authID
         DataBaseWrite d = new DataBaseWrite();
         d.writeUser(user); //Method to write in the Database

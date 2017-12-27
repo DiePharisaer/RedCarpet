@@ -50,6 +50,9 @@ public class ListAdapterParties extends ArrayAdapter<Party> {
 
             ///Populate the TextViews
             if (txtManeParty != null) {
+                if(p.isPartyStarted()){
+                    txtManeParty.setText(p.getName() + "\n (NOW)");
+                }else
                 txtManeParty.setText(p.getName());
             }
             if (txtLocationParty != null) {
@@ -58,8 +61,6 @@ public class ListAdapterParties extends ArrayAdapter<Party> {
             if (txtNumberUsers != null) {
                 txtNumberUsers.setText(p.getNumUserAttending()+"");
             }
-
-            setImage(p);
 
 
 
