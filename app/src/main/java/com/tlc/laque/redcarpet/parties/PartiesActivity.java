@@ -77,10 +77,10 @@ public class PartiesActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame); //Remember this is the FrameLayout area within your activity_main.xml
-       contentFrameLayout.removeAllViews();
+        contentFrameLayout.removeAllViews();
         getLayoutInflater().inflate(R.layout.activity_parties, contentFrameLayout);
         dbW = new DataBaseWrite();
-         dbR = new DataBaseRead();
+        dbR = new DataBaseRead();
 
 
         Bundle extras = getIntent().getExtras();
@@ -88,7 +88,7 @@ public class PartiesActivity extends MainActivity {
         pathParty = extras.getString("pathParty");
 
         RatingBar rating = (RatingBar)findViewById(R.id.rating);
-         ratingBarOrg = (RatingBar)findViewById(R.id.ratingBarOrganizer);
+        ratingBarOrg = (RatingBar)findViewById(R.id.ratingBarOrganizer);
 
 
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

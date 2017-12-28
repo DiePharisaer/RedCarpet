@@ -7,61 +7,65 @@
     android:background="@color/md_white_1000"
     tools:context="com.tlc.laque.redcarpet.settings.UserSettingActivity">
 
-    <TextView
-        android:id="@+id/textView5"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NickName"
-        android:layout_alignBaseline="@+id/editTextNameSetting"
-        android:layout_alignBottom="@+id/editTextNameSetting"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:id="@+id/editTextNameSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Name"
+        android:layout_marginTop="57dp"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/textView5" />
+        android:layout_centerHorizontal="true">
 
-    <EditText
-        android:id="@+id/editTextLocationSetting"
+        <EditText
+            android:id="@+id/editTextNameSetting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/inputlayoutLoc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editTextNameSetting"
-        android:layout_below="@+id/editTextNameSetting"
-        android:layout_marginTop="11dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Name" />
+        android:hint="Location"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/inputlayoutName"
+        android:layout_alignStart="@+id/inputlayoutName"
+        android:layout_alignEnd="@+id/inputlayoutName">
 
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editTextLocationSetting"
-        android:layout_alignBottom="@+id/editTextLocationSetting"
-        android:layout_alignParentStart="true"
-        android:text="Location" />
+        <EditText
+            android:id="@+id/editTextLocationSetting"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignEnd="@+id/inputlayoutName"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="121dp"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <Spinner
         android:id="@+id/spinnerPrivacy"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextLocationSetting"
-        android:layout_alignStart="@+id/editTextLocationSetting"
-        android:layout_marginTop="14dp"
-        android:layout_alignEnd="@+id/editTextLocationSetting" />
+        android:layout_marginTop="57dp"
+        android:layout_below="@+id/inputlayoutLoc"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/spinnerPrivacy"
+        android:text="Privacy"
+        android:layout_alignBaseline="@+id/spinnerPrivacy"
+        android:layout_alignBottom="@+id/spinnerPrivacy"
         android:layout_toStartOf="@+id/spinnerPrivacy"
-        android:text="Privacy" />
+        android:layout_marginEnd="10dp" />
 
     <Button
         android:id="@+id/button2"

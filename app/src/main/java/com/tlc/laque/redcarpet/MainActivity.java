@@ -58,8 +58,9 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
 
-      //  toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(getSupportActionBar() == null)
+            setSupportActionBar(toolbar);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity{
             View counterTextPanel = view.findViewById(R.id.counterValuePanel);
             counterTextPanel.setVisibility(View.GONE);
         } else {
-            TextView textView = (TextView) view.findViewById(R.id.count);
+            TextView textView = view.findViewById(R.id.count);
             textView.setText("" + count);
         }
 
@@ -193,13 +194,13 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
         actionBarDrawerToggle.syncState();
     }
-    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -241,19 +242,18 @@ public class MainActivity extends AppCompatActivity{
     public void getData(final MenuItem menuItem){
         DataBaseRead dr = new DataBaseRead();
         String userID = dr.getUserId();
-        menuItem.setIcon(buildCounterDrawable( 0 , R.drawable.friend_request));
+        menuItem.setIcon(buildCounterDrawable( 0 , R.drawable.ic_menu_gallery));
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users"+"/"+userID);
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
+                if(dataSnapshot.getValue() == null){}                    //If user exist show the old information
                 else {
                     DataBaseRead dr = new DataBaseRead();
                     //user = getData(dataSnapshot, userId);
-
-                    menuItem.setIcon(buildCounterDrawable( dr.getUser(dataSnapshot).getNumberFriendsRequestS(), R.drawable.friend_request));
+                    menuItem.setIcon(buildCounterDrawable( dr.getUser(dataSnapshot).getNumberFriendsRequestS(), R.drawable.ic_menu_gallery));
                 }
             }
 

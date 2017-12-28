@@ -64,19 +64,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_above="@+id/switchAttendingUs"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/textViewInformation"
-                android:layout_alignParentEnd="true">
+                android:orientation="horizontal">
 
                 <RatingBar
-                    android:scrollbarSize="5dp"
                     android:id="@+id/ratingBarOrganizer"
                     style="?android:attr/ratingBarStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:isIndicator="true"
                     android:numStars="5"
+                    android:layout_gravity="center"
+                    android:scrollbarSize="5dp"
                     android:stepSize="0.1" />
             </LinearLayout>
 
