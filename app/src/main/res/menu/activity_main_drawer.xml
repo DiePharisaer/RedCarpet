@@ -4,36 +4,36 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_parties"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/allparty_nav"
             android:title="All Parties" />
         <item
             android:id="@+id/nav_parties_attending"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Parties Attending" />
+            android:icon="@drawable/attending_nav"
+            android:title="Parties I\'m Attending" />
         <item
             android:id="@+id/nav_friends"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Friends" />
+            android:icon="@drawable/friends_nav"
+            android:title="My Friends" />
         <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Setting" />
+            android:icon="@drawable/settings_nav"
+            android:title="Settings" />
         <item
             android:id="@+id/nav_create_party"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Create Party" />
+            android:icon="@drawable/create_nav"
+            android:title="Create New Party" />
         <item
             android:id="@+id/nav_vote_party"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Vote Party attended" />
+            android:icon="@drawable/vote_nav"
+            android:title="Vote Attended Parties" />
     </group>
 
     <item android:title="Administration">
         <menu>
             <item
                 android:id="@+id/nav_attending_party"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Attending Party" />
+                android:icon="@drawable/check_nav"
+                android:title="Accept New Parties" />
         </menu>
     </item>
 

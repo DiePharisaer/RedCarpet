@@ -29,10 +29,6 @@ import java.util.Calendar;
 *Activity for create a new Party
 * Only if you have N Friends
 *Then it has to be accepted from the Adiminstration
-<<<<<<< HEAD
-=======
-* TEST COMMENT
->>>>>>> origin/master
 */
 
 public class CreateNewPartyActivity extends MainActivity {
@@ -57,11 +53,7 @@ public class CreateNewPartyActivity extends MainActivity {
         contentFrameLayout.removeAllViews();
         getLayoutInflater().inflate(R.layout.activity_create_new_party, contentFrameLayout);
 
-
         initVariable();
-
-
-
     }
 
     //Initialize all the Variable
@@ -80,9 +72,7 @@ public class CreateNewPartyActivity extends MainActivity {
 
     //Listener of the Buttons of all the activity
     public void clickCreateParty(View view){
-        Intent anIntent;
         switch (view.getId()) {
-
             case R.id.buttonAddImage:
                 getImage();
                 break;
@@ -90,7 +80,6 @@ public class CreateNewPartyActivity extends MainActivity {
                 uploadParty();
                 break;
         }
-
     }
     //Upload Party to the adiministration Part where will be accepted or not
     private void uploadParty(){

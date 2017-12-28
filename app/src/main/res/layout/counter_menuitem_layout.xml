@@ -3,7 +3,7 @@
     android:id="@+id/counterPanel"
     android:layout_width="32dp"
     android:layout_height="32dp"
-    android:background="@drawable/ic_menu_gallery">
+    android:background="@drawable/friend_request">
 
     <RelativeLayout
         android:id="@+id/counterValuePanel"

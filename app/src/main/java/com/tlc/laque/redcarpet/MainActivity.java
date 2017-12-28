@@ -227,10 +227,6 @@ public class MainActivity extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
         if(id == R.id.testAction){
             Intent anIntent;
             anIntent = new Intent(getApplicationContext(), ListUsers.class);
@@ -245,7 +241,7 @@ public class MainActivity extends AppCompatActivity{
     public void getData(final MenuItem menuItem){
         DataBaseRead dr = new DataBaseRead();
         String userID = dr.getUserId();
-        menuItem.setIcon(buildCounterDrawable( 0 , R.drawable.ic_menu_gallery));
+        menuItem.setIcon(buildCounterDrawable( 0 , R.drawable.friend_request));
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference("users"+"/"+userID);
@@ -257,7 +253,7 @@ public class MainActivity extends AppCompatActivity{
                     DataBaseRead dr = new DataBaseRead();
                     //user = getData(dataSnapshot, userId);
 
-                    menuItem.setIcon(buildCounterDrawable( dr.getUser(dataSnapshot).getNumberFriendsRequestS(), R.drawable.ic_menu_gallery));
+                    menuItem.setIcon(buildCounterDrawable( dr.getUser(dataSnapshot).getNumberFriendsRequestS(), R.drawable.friend_request));
                 }
             }
 
