@@ -15,11 +15,13 @@
 
     <TextView
         android:id="@+id/textViewNamePartyList"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="29dp"
         android:text="TextView"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:layout_above="@+id/textViewLocationPartyList"
         android:layout_toEndOf="@+id/imageViewUserAdapter" />
 
     <TextView
@@ -36,7 +38,6 @@
         android:layout_height="wrap_content"
         android:text="50"
         android:textSize="30dp"
-        android:layout_alignBottom="@+id/textViewNamePartyList"
         android:layout_toStartOf="@+id/imageView5"
         android:layout_alignParentTop="true" />
 
