@@ -19,10 +19,34 @@ public class User {
     private int numberFriendsRequestS;
     private String rating = "0";
     private String numberVote = "0";
+    private String urlPicture = "https://firebasestorage.googleapis.com/v0/b/red-carpet-6590c.appspot.com/o/users_images%2Fgeneric-user.png?alt=media&token=2ad347b4-7925-48ac-9d99-d6594518be0b";
 
     // Default constructor required for calls to
     // DataSnapshot.getValue(User.class)
     public User() {
+    }
+    public User(String name, String email) {
+        this.nickname = name;
+        this.location = email;
+    }
+    public User(String name, String email, String privacy) {
+        this.nickname = name;
+        this.location = email;
+        this.privacy = privacy;
+    }
+    public User(String name, String email, String privacy, String urlPicture) {
+        this.nickname = name;
+        this.location = email;
+        this.privacy = privacy;
+        this.urlPicture = urlPicture;
+    }
+
+    public String getUrlPicture() {
+        return urlPicture;
+    }
+
+    public void setUrlPicture(String urlPicture) {
+        this.urlPicture = urlPicture;
     }
 
     public String getNumberVote() {
@@ -41,15 +65,7 @@ public class User {
         this.rating = rating;
     }
 
-    public User(String name, String email) {
-        this.nickname = name;
-        this.location = email;
-    }
-    public User(String name, String email, String privacy) {
-        this.nickname = name;
-        this.location = email;
-        this.privacy = privacy;
-    }
+
 
     public int getNumberFriendsRequestS() {
         return numberFriendsRequestS;

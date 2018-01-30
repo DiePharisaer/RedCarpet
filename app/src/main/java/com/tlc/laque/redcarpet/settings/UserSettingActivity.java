@@ -1,6 +1,8 @@
 package com.tlc.laque.redcarpet.settings;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,9 +10,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -19,10 +23,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 import com.tlc.laque.redcarpet.database.DataBaseRead;
 import com.tlc.laque.redcarpet.database.DataBaseWrite;
+import com.tlc.laque.redcarpet.parties.CreateNewPartyActivity;
+import com.tlc.laque.redcarpet.parties.PartiesActivity;
 import com.tlc.laque.redcarpet.users.ListAdapterUser;
 import com.tlc.laque.redcarpet.users.ListUsers;
 import com.tlc.laque.redcarpet.users.User;
@@ -36,6 +46,11 @@ public class UserSettingActivity extends MainActivity {
     private User user;
     private  DataBaseRead dr;
     private static final String REQUIRED = "Required";
+    private int GALLERY_INTENT = 2;
+    private ImageView imageSelected;
+    private StorageReference mStorage;
+    private Uri uri;
+    String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +61,7 @@ public class UserSettingActivity extends MainActivity {
 
         nickNameField = (EditText) findViewById(R.id.editTextNameSetting);
         locationField = (EditText) findViewById(R.id.editTextLocationSetting);
+        imageSelected = findViewById(R.id.imageViewUserSelected);
 
 
         mSpinner = findViewById(R.id.spinnerPrivacy);
@@ -81,6 +97,7 @@ public class UserSettingActivity extends MainActivity {
                     //user = getData(dataSnapshot, userId);
                     nickNameField.setText(user.getNickname());
                     locationField.setText(user.getLocation());
+                    setImage();
                 }
             }
 
@@ -107,17 +124,64 @@ public class UserSettingActivity extends MainActivity {
             locationField.setError(REQUIRED);
             return;
         }
+
+        if(uri == null){
+            Toast.makeText(UserSettingActivity.this, "Error Server", Toast.LENGTH_LONG).show();
+        }
+        else {
+            StorageReference filePath = mStorage.child("users_images").child(uri.getLastPathSegment());
+            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    url = taskSnapshot.getDownloadUrl().toString();
+                    uploadUser(nickName, location);
+                }
+            });
+
+
+        }
+    }
+    private void uploadUser(String nickName, String location){
         String privacy = mSpinner.getSelectedItem().toString();
 
-        dr.checkExist(new User(nickName, location, privacy), user, this);
+        dr.checkExist(new User(nickName, location, privacy, url), user, this);
 
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         editor.putString("MyNickName", nickName);
         editor.commit();
+    }
+
+    public void buttonSelectImage(View view){
+        getImage();
+    }
+
+    //Get Image from the Gallery
+    private void getImage(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,GALLERY_INTENT);
+
+    }
+    private void setImage(){
+        ImageView v = findViewById(R.id.imageViewUserSelected);
+        Picasso.with(UserSettingActivity.this).load(user.getUrlPicture()).fit().centerCrop()
+                .placeholder(R.drawable.progress_animation )
+                .error(R.drawable.error_download)
+                .into(v);
 
 
+    }
+    // Open Activity Gallery to select the Image
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mStorage = FirebaseStorage.getInstance().getReference();
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_INTENT && resultCode == RESULT_OK) {
+            uri = data.getData();
+            imageSelected.setImageURI(uri);
+        }
     }
 }
 

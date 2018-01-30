@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.tlc.laque.redcarpet.R;
 
 
@@ -46,6 +47,7 @@ public View getView(int position, View convertView, ViewGroup parent) {
             TextView txtNumberUsers =  v.findViewById(R.id.textViewNumFriends);
             TextView txtLocationUsers =  v.findViewById(R.id.textViewLocationUser);
             image = v.findViewById(R.id.imageViewUserAdapter);
+            setImage(u);
 
             if (txtManeParty != null) {
                 txtManeParty.setText(u.getNickname());
@@ -67,4 +69,12 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
         return v;
         }
+
+    //Get Image from FireBase Storage and put in the ImageView
+    private void setImage (User u){
+        Picasso.with(getContext()).load( u.getUrlPicture()).fit().centerCrop()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.error_download)
+                .into(image);
+    }
 }

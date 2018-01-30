@@ -46,16 +46,17 @@ public class DataBaseWrite {
         mDatabase.child("privacy").setValue(user.getPrivacy());
         mDatabase.child("rating").setValue(user.getRating());
         mDatabase.child("numberVote").setValue(user.getNumberVote());
+        mDatabase.child("urlPicture").setValue(user.getUrlPicture());
     }
 
     public void registerUser(String userID, String idParty){
         mDatabase = FirebaseDatabase.getInstance().getReference("Parties/"+idParty);
         // [END initialize_database_ref]
-        mDatabase.child("userAttending").child(userID).setValue(userID);
+        mDatabase.child("userAttending").child(userID).setValue(userID);     //Save User Id in the Party Attending
         DataBaseRead dbR = new DataBaseRead();
         mDatabase = FirebaseDatabase.getInstance().getReference("users/"+dbR.getUserId());
         // [END initialize_database_ref]
-        mDatabase.child("partyAttending").child(idParty).setValue(idParty);
+        mDatabase.child("partyAttending").child(idParty).setValue(idParty);         //Save Party Id in the User party attending
     }
 
     public void cancelRegisterUser(String userID, String idParty, String nameParty){
@@ -64,7 +65,6 @@ public class DataBaseWrite {
         DataBaseRead dbR = new DataBaseRead();
         mDatabase = FirebaseDatabase.getInstance().getReference("users/"+dbR.getUserId());
         mDatabase.child("partyAttending").child(idParty).removeValue();
-
     }
 
     public void addFriendAttending(String userIDF){
@@ -166,15 +166,24 @@ public class DataBaseWrite {
         moveParty(mDataBaseFrom, mDataBaseTo, p.getKey());
     }
 
+    public void uploadPictureUser(String url){
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+userID);
+        // [END initialize_database_ref]
+        mDatabase.child("urlPicture").setValue(url);
+    }
+
+
+    //Vote Party
     public void voteParty(Party p,String keyOrganizer, String oldrate, float newRate, String numberVote){
         float newR = Float.valueOf(oldrate);
         int numberV = Integer.parseInt(numberVote);
-        numberV = numberV + 1;
-        newR = newR + newRate;
-        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+keyOrganizer);
+        numberV = numberV + 1;            //increment Vote by 1
+        newR = newR + newRate;              //Incremente Rating with the new one
+        mDatabase = FirebaseDatabase.getInstance().getReference("users/"+keyOrganizer);         //Get reference og the organizer user
         // [END initialize_database_ref]
-        mDatabase.child("rating").setValue(newR);
-        mDatabase.child("numberVote").setValue(numberV);
+        mDatabase.child("rating").setValue(newR);           // Save new Rating
+        mDatabase.child("numberVote").setValue(numberV);       //Save new  numberVote incremented by 1
         mDatabase = FirebaseDatabase.getInstance().getReference("PartiesFinished/"+p.getKey()+"/userAttending");
         mDatabase.child(keyOrganizer).removeValue();
     }

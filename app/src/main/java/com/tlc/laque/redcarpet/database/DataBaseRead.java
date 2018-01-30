@@ -73,8 +73,8 @@ public class DataBaseRead {
     public ArrayList<Party> getAllPartiesAttended(DataSnapshot dataSnapshot) throws ParseException {
         parties = new ArrayList();
         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-            getParty(postSnapshot);
-                parties.add(p);
+
+                parties.add(getParty(postSnapshot));
             }
 
         return parties;
@@ -107,6 +107,7 @@ public class DataBaseRead {
         u.setNumberFriendsRequestS((int) postSnapshot.child("friendAttending").getChildrenCount());
         u.setRating(postSnapshot.child("rating").getValue().toString());
         u.setNumberVote(postSnapshot.child("numberVote").getValue().toString());
+        u.setUrlPicture(postSnapshot.child("urlPicture").getValue().toString());
 
         return u;
     }
@@ -149,7 +150,7 @@ public class DataBaseRead {
         return parties;
     }
 
-    public void checkExist(final User user, User userOld, final Context context) {
+    public void checkExist(final User user, final User userOld, final Context context) {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -158,14 +159,21 @@ public class DataBaseRead {
 
         if (user.getNickname().equalsIgnoreCase(userOld.getNickname())) {
             DataBaseWrite dr = new DataBaseWrite();
-            dr.writeUser(user);
+            userOld.setLocation(user.getLocation());
+            userOld.setPrivacy(user.getPrivacy());
+            userOld.setUrlPicture(user.getUrlPicture());
+            dr.writeUser(userOld);
         } else {
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if (dataSnapshot.getValue() == null) {
                         DataBaseWrite dr = new DataBaseWrite();
-                        dr.writeUser(user);
+                        userOld.setLocation(user.getLocation());
+                        userOld.setNickname(user.getNickname());
+                        userOld.setPrivacy(user.getPrivacy());
+                        userOld.setUrlPicture(user.getUrlPicture());
+                        dr.writeUser(userOld);
                     } else {
                         Toast.makeText(context, "NickName already exist", Toast.LENGTH_LONG).show();
                     }

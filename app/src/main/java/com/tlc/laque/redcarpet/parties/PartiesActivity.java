@@ -43,6 +43,8 @@ import com.tlc.laque.redcarpet.database.DataBaseWrite;
 import com.tlc.laque.redcarpet.users.ListUsers;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -87,8 +89,8 @@ public class PartiesActivity extends MainActivity {
         idParty = extras.getString("idParty");
         pathParty = extras.getString("pathParty");
 
-        RatingBar rating = (RatingBar)findViewById(R.id.rating);
-         ratingBarOrg = (RatingBar)findViewById(R.id.ratingBarOrganizer);
+        RatingBar rating = (RatingBar)findViewById(R.id.rating);            // Rating bar ...
+        ratingBarOrg = (RatingBar)findViewById(R.id.ratingBarOrganizer);  //Rating bar to show the rate of the organizer
 
 
         rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -143,6 +145,8 @@ public class PartiesActivity extends MainActivity {
                         getInfoOrganizer();
                     } catch (ParseException e) {
                         e.printStackTrace();
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -173,7 +177,7 @@ public class PartiesActivity extends MainActivity {
         });
     }
 
-    public void  getInfoParty(DataSnapshot dataSnapshot) throws ParseException {
+    public void  getInfoParty(DataSnapshot dataSnapshot) throws ParseException, MalformedURLException {
         p = new Party();
         p = dbR.getParty(dataSnapshot);
         if(dataSnapshot.child("userAttending").child(dbR.getUserId()).exists()){
@@ -186,7 +190,7 @@ public class PartiesActivity extends MainActivity {
 
     }
     //Set the TextView after read the DataBase
-    private void setTextView(){
+    private void setTextView() throws MalformedURLException {
 
         if(pathParty.toLowerCase().contains("administration")){
             layoutUserAttended.setVisibility(View.GONE);
@@ -254,12 +258,13 @@ public class PartiesActivity extends MainActivity {
     }
 
     //if request.auth != null
-    private void setImage(){
-         v = findViewById(R.id.imageViewParty);
-        Picasso.with(PartiesActivity.this).load( p.getUrl()).fit().centerCrop()
-                .placeholder(R.drawable.downloading2)
+    private void setImage() throws MalformedURLException {
+        v = findViewById(R.id.imageViewParty);
+        Picasso.with(PartiesActivity.this).load(p.getUrl()).fit().centerCrop()
+                .placeholder(R.drawable.progress_animation )
                 .error(R.drawable.error_download)
                 .into(v);
+
 
     }
 
@@ -276,11 +281,17 @@ public class PartiesActivity extends MainActivity {
         DataBaseWrite dw = new DataBaseWrite();
         dw.deleteAttendingPArty(p.getKey());
         dw.saveNewParty(p);
+        Intent intent = new Intent(PartiesActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void refuseParty(){
         DataBaseWrite dw = new DataBaseWrite();
         dw.deleteAttendingPArty(p.getKey());
+        Intent intent = new Intent(PartiesActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
 
         //StorageReference photoRef = mFirebaseStorage.getReferenceFromUrl(p.getUrl());
     }

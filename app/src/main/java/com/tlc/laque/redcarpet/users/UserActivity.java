@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.tlc.laque.redcarpet.MainActivity;
 import com.tlc.laque.redcarpet.R;
 import com.tlc.laque.redcarpet.database.DataBaseRead;
@@ -36,6 +38,7 @@ public class UserActivity extends MainActivity {
     TextView txNumberFriends;
     TextView txPhoneNumber;
     TextView txFriendStatus;
+    ImageView image;
     Button buttonAddFriend;
     Button buttonNoFriend;
     String userID;
@@ -78,6 +81,7 @@ public class UserActivity extends MainActivity {
         listView = findViewById(R.id.listViewUserParty);
         txNickname = findViewById(R.id.textViewNNUser);
         txLocation = findViewById(R.id.TextViewLocUser);
+        image = findViewById(R.id.imageView2);
        // txNumberFriends = findViewById(R.id.textViewNumberFriends)
         txPhoneNumber = findViewById(R.id.textViewPhoneNumberUser);
         txFriendStatus = findViewById(R.id.textViewAddFriend);
@@ -137,6 +141,7 @@ public class UserActivity extends MainActivity {
     }
 
     private void setTextUser(User user){
+        setImage(user);
         buttonNoFriend.setVisibility(View.INVISIBLE);
         txNickname.setText(user.getNickname());
         if(checkPRivacy(user)) {
@@ -192,5 +197,12 @@ public class UserActivity extends MainActivity {
         else if(u.getPrivacy().equalsIgnoreCase("Everyone"))
             return true;
         return false;
+    }
+
+    private void setImage (User u){
+        Picasso.with(getApplicationContext()).load( u.getUrlPicture()).fit().centerCrop()
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.error_download)
+                .into(image);
     }
 }

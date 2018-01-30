@@ -47,7 +47,7 @@ public class ListAdapterParties extends ArrayAdapter<Party> {
             TextView txtLocationParty = v.findViewById(R.id.textViewLocationPartyList);
             TextView txtNumberUsers =  v.findViewById(R.id.textViewNumAttending);
             image = v.findViewById(R.id.imageViewUserAdapter);
-
+            setImage(p);
             ///Populate the TextViews
             if (txtManeParty != null) {
                 if(p.isPartyStarted()){
@@ -72,7 +72,7 @@ public class ListAdapterParties extends ArrayAdapter<Party> {
         //Get Image from FireBase Storage and put in the ImageView
         private void setImage (Party p){
                     Picasso.with(getContext()).load( p.getUrl()).fit().centerCrop()
-                            .placeholder(R.drawable.downloading2)
+                            .placeholder(R.drawable.progress_animation)
                             .error(R.drawable.error_download)
                             .into(image);
         }

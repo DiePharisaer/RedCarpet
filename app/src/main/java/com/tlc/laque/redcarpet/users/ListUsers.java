@@ -120,7 +120,7 @@ public class ListUsers extends MainActivity {
             }
         }); */
     }
-    private void getContactList() {
+    private void getContactList() {   // Get contact list from my device
         ContentResolver cr = getContentResolver();
         Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
                 null, null, null, null);
@@ -177,6 +177,8 @@ public class ListUsers extends MainActivity {
                 else {
 
                     DataBaseRead dbR = new DataBaseRead();
+                    users.clear();
+                    usersListFriends.clear();
                     users = dbR.getAllUsers(dataSnapshot);
                     for(User u: users) {
                         for (Contact conta : contactList) {
@@ -190,6 +192,7 @@ public class ListUsers extends MainActivity {
                     listViewUsers.setAdapter(LicustomAdapter);
                     setTitle("Contacts in the app");
                     buttonFriends.setText("get Contacts");
+                    users = usersListFriends;
                 }
             }
 

@@ -83,11 +83,11 @@ public class CreateNewPartyActivity extends MainActivity {
     }
     //Upload Party to the adiministration Part where will be accepted or not
     private void uploadParty(){
-        String nameParty = nickNameField.getText().toString();
-        String location = locationField.getText().toString();
-        String timeStart = timeStartField.getText().toString();
-        String timeFinish = timeFinishField.getText().toString();
-        String information = informationField.getText().toString();
+        final String nameParty = nickNameField.getText().toString();
+        final String location = locationField.getText().toString();
+        final String timeStart = timeStartField.getText().toString();
+        final String timeFinish = timeFinishField.getText().toString();
+        final String information = informationField.getText().toString();
 
         if(TextUtils.isEmpty(nameParty)){
             nickNameField.setError(REQUIRED);
@@ -120,26 +120,27 @@ public class CreateNewPartyActivity extends MainActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     p.setUrl(taskSnapshot.getDownloadUrl().toString());
                     Toast.makeText(CreateNewPartyActivity.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                    uploadParty(nameParty, timeStart, timeFinish, location, information);
                 }
             });
-            DataBaseRead dr = new DataBaseRead();
-            p.setName(nameParty);
-            p.setTimeStart(timeStart);
-            p.setTimeFinish(timeFinish);
-            p.setLocation(location);
-            p.setInfo(information);
-            p.setUrl(uri.toString());
-            p.setOrganizer(dr.getUserId());
-
-            DataBaseWrite dw = new DataBaseWrite();
-            dw.createParty(p);
-            Toast.makeText(this, "Party created, it will be checked by the administration first", Toast.LENGTH_LONG).show();
-            finish();
 
         }
 
+    }
+    private void uploadParty(String nameParty, String timeStart, String timeFinish, String location, String information){
+        DataBaseRead dr = new DataBaseRead();
+        p.setName(nameParty);
+        p.setTimeStart(timeStart);
+        p.setTimeFinish(timeFinish);
+        p.setLocation(location);
+        p.setInfo(information);
+        // p.setUrl(uri.toString());
+        p.setOrganizer(dr.getUserId());
 
-
+        DataBaseWrite dw = new DataBaseWrite();
+        dw.createParty(p);
+        Toast.makeText(this, "Party created, it will be checked by the administration first", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     //Get Image from the Gallery
@@ -158,7 +159,6 @@ public class CreateNewPartyActivity extends MainActivity {
         if(requestCode==GALLERY_INTENT && resultCode==RESULT_OK) {
             uri = data.getData();
             imageSelected.setImageURI(uri);
-
         }
 
     }
