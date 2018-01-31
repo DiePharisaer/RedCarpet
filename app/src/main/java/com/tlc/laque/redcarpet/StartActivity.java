@@ -1,12 +1,19 @@
 package com.tlc.laque.redcarpet;
 
+import android.*;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.tlc.laque.redcarpet.registration.PhoneAuthActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 This is the launcher activity.
@@ -26,6 +33,7 @@ public class StartActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         logB = sharedPref.getBoolean("logB", false);
+
 
         //CHECK REFERENCES IF THE USERS HAS ALREADY LOGGED IN (TIMER 2 SECONDS)
         Thread timerThread = new Thread(){
@@ -51,5 +59,7 @@ public class StartActivity extends AppCompatActivity {
         };
         timerThread.start();
     }
+
+
 
 }

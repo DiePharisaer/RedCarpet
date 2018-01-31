@@ -39,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText nickNameField;
     private EditText locationField;
     private FirebaseAuth mAuth;
+    private User oldUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,10 @@ public class RegistrationActivity extends AppCompatActivity {
                 if(dataSnapshot.getValue() == null){}                    //If user exist show the old informations
                 else {
                     DataBaseRead dr = new DataBaseRead();
-                    User user = dr.getUser(dataSnapshot);
+                    oldUser = dr.getUser(dataSnapshot);
                     //user = getData(dataSnapshot, userId);
-                    nickNameField.setText(user.getNickname());
-                    locationField.setText(user.getLocation());
+                    nickNameField.setText(oldUser.getNickname());
+                    locationField.setText(oldUser.getLocation());
                 }
             }
 
@@ -99,7 +100,15 @@ public class RegistrationActivity extends AppCompatActivity {
         User user = new User(nickName, location, "Everyone"); // creating user object
         // pushing user to 'users' node using the the authID
         DataBaseWrite d = new DataBaseWrite();
-        d.writeUser(user); //Method to write in the Database
+        if(oldUser == null){
+            d.writeUser(user); //Method to write in the Database
+        }
+        else{
+            user.setUrlPicture(oldUser.getUrlPicture());
+            DataBaseRead dr = new DataBaseRead();
+            dr.checkExist(user, oldUser, this);
+        }
+
 
         SharedPreferences sharedPref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();

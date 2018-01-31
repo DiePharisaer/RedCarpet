@@ -138,7 +138,7 @@ public class UserSettingActivity extends MainActivity {
                 }
             });
 
-
+            Toast.makeText(this, "Data Saved", Toast.LENGTH_LONG).show();
         }
     }
     private void uploadUser(String nickName, String location){

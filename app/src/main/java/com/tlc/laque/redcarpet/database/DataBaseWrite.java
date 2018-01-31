@@ -185,7 +185,7 @@ public class DataBaseWrite {
         mDatabase.child("rating").setValue(newR);           // Save new Rating
         mDatabase.child("numberVote").setValue(numberV);       //Save new  numberVote incremented by 1
         mDatabase = FirebaseDatabase.getInstance().getReference("PartiesFinished/"+p.getKey()+"/userAttending");
-        mDatabase.child(keyOrganizer).removeValue();
+        mDatabase.child(dr.getUserId()).removeValue();
     }
     private void moveParty(final DatabaseReference fromPath, final DatabaseReference toPath, final String key) {
         fromPath.addListenerForSingleValueEvent(new ValueEventListener() {
